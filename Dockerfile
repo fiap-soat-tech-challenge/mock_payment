@@ -4,5 +4,5 @@ WORKDIR /app
 COPY ["package.json", "package-lock.json*", "./"]
 RUN npm install --production
 COPY . .
-EXPOSE 3001
+EXPOSE 3030
 CMD ["dumb-init", "node", "server.js"]
