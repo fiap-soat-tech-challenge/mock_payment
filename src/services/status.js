@@ -4,7 +4,13 @@ import logger from "../utils/logger.js";
 dotenv.config();
 
 export const mudarStatusDePagamento = async (pagamentoId) => {
-  logger('info', `Enviando confirmação do pagamentoId ${pagamentoId}`);
+  const randomNumber = Math.floor(Math.random() * 2);
+  let status = 'APROVADO';
+  if (randomNumber === 1) {
+    status = 'RECUSADO';
+  }
+
+  logger('info', `Enviando confirmação do pagamentoId ${pagamentoId} com status ${status}`);
 
   const response = await fetch(
     `http://${process.env.LACHONETE_HOST}:${process.env.LACHONETE_PORT}/api/pagamentos/processar`,
@@ -14,7 +20,7 @@ export const mudarStatusDePagamento = async (pagamentoId) => {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ pagamentoId, status: 'APROVADO' }),
+      body: JSON.stringify({ pagamentoId, status: status }),
     },
   );
 
